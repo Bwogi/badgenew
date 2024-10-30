@@ -1,3 +1,4 @@
+// app/lib/actions.ts
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -23,7 +24,6 @@ export async function createBadge(formData: FormData) {
   }
 
   const { empName, empId, badgeNumber } = validatedFields.data;
-
   const client = await clientPromise;
   const db = client.db("badge-management");
 
