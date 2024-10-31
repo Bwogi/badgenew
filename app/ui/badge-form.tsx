@@ -1,3 +1,4 @@
+// app/ui/badge-form.tsx
 "use client";
 
 import { useFormStatus } from "react-dom";
@@ -23,6 +24,8 @@ const formSchema = z.object({
   badgeNumber: z.string().min(1, { message: "Badge number is required" }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
 function SubmitButton() {
   const { pending } = useFormStatus();
 
@@ -34,7 +37,7 @@ function SubmitButton() {
 }
 
 export default function BadgeForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       empName: "",
@@ -43,7 +46,7 @@ export default function BadgeForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: FormValues) {
     const formData = new FormData();
     formData.append("empName", values.empName);
     formData.append("empId", values.empId);
@@ -67,7 +70,7 @@ export default function BadgeForm() {
                 <FormItem>
                   <FormLabel>Employee Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input {...field} placeholder="John Doe" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -80,7 +83,7 @@ export default function BadgeForm() {
                 <FormItem>
                   <FormLabel>Employee ID</FormLabel>
                   <FormControl>
-                    <Input placeholder="EMP123" {...field} />
+                    <Input {...field} placeholder="EMP123" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +96,7 @@ export default function BadgeForm() {
                 <FormItem>
                   <FormLabel>Badge Number</FormLabel>
                   <FormControl>
-                    <Input placeholder="B123" {...field} />
+                    <Input {...field} placeholder="B123" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
